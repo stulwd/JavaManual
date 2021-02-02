@@ -1,0 +1,190 @@
+IO流：
+  字符流(char)：
+    Reader：
+      BufferedReader
+      InputStreamReader     // 接收 FileInputStream 对象作为参数来创建
+        FileReader          // 接收 File 对象作为参数来创建
+      StringReader
+      PipedReader
+      CharArrayReader
+      FilterReader
+        PushbackReader
+    Writer：
+      BufferedWriter
+      OutputStreamWriter    // 接收 FileOutputStream 对象作为参数来创建
+        FileWriter          // 接收 File 对象作为参数来创建
+      StringWriter
+      PipedWriter
+      CharArrayWriter
+      FilterWriter
+  字节流(byte)：
+    InputStream：
+      FileInputStream
+      FilterInputStream
+        BufferedInputStream
+        DataInputStream
+        PushbaskInputStream
+      ObjectInputStream
+      PipedInputStream
+      SequenceInputStream
+      StringBufferInputStream
+      ByteArrayInputStream
+    OutputStream：
+      FileOutputStream
+      FilterOutputStream
+        BufferedOutputStream
+        DataOutputStream
+        PrintOutputStream
+      ObjectOutputStream
+      PipedOutputStream
+      ByteArrayOutputStream
+
+Java流（Stream）和IO：
+  定义读取buffer：
+    // System.in相当于已经加载到内存中的输入文件句柄，新创建一个InputStreamReader，指定到这个文件句柄, 新创建一个bufferedReader，指定到
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in))    
+  从控制台读取字符：
+    char c = (char)br.read()  // 每次只读取一个字符
+    System.out.println(c)
+  从控制台读取字符串：
+    String str =  br.readLine()
+    System.out.println(str)
+  // 从java5开始可以使用java scanner来读取控制台输入
+  控制台输出：
+    System.out.write('A')
+    System.out.print('abc')
+    System.out.println('abc')
+  文件输入字节流：
+    用法：
+      InputStream f = new FileInputStream("file.txt") // 加载file.txt到内存
+      或
+      File f = new File("file.txt")     // 不会读入内存
+      InputStream is = new FileInputStream(f)     // 读入内存
+      int size = is.available();
+      for (int i = 0; i < size; i++){
+        System.out.print(is.read())
+      }
+      is.close()
+  文件输出字节流：
+    用法：
+      OutputStream os = new FileOutputStream("xxx.txt")
+      或
+      File f = new File("xxx.txt")
+      OutputStream os = new FileOutputStream(f)
+      os.write('a')
+  文件输入输出字符流示例：
+    FileOutputStream fop = new FileOutputStream("xxx.txt")
+    OutputStreamWriter writer = new OutputStreamWriter(fop, "UTF-8")
+    writer.append("中文输入")
+    writer.append("\n\r")
+    writer.close()
+    fop.close()
+    FileInputStream is = new FileInputStream("xxx.txt")   // 加载文件到内存
+    InputStreamReader reader = new InputStreamReader(is, "UTF-8")  
+    StringBuffer sb = new StringBuffer()
+    sb.append((char) reader.read())
+    System.out.print(sb)
+    reader.close()
+    is.close()  // 释放内存
+
+文件（File）类：
+  用法：
+    File f = new File("文件路径")
+  方法：
+    String getName();   // 返回文件名，不包含路径
+    String getParent()
+    File getParentFile()  // 返回父路径名
+    String getPath()
+    boolean isAbsolute()
+    String getAbsolutePath()
+    boolean canRead()  
+    boolean canWrite()
+    boolean exists()
+    boolean isDirectory()
+    boolean isFile()
+    long lastModified()   // 最后一次的修改时间
+    long length()   // 文件长度
+    boolean createNewFile() throws IOException
+    boolean delete()  // 删除此文件
+    void deleteOnExit()   // 在虚拟机终止时，请求删除此文件
+    String[] list()   // 返回文件夹中的文件
+    String[] list(FilenameFilter filter)    // 列举过滤后的文件，FilenameFileter类中有个方法是accept，会作用在每一个文件上
+    File[] listFiles()    // 只列举文件
+    File[] listFiles(FilenameFile filter)
+    boolean mkdir()
+    boolean mkdirs()  // 相当于shell命令 mkdir -p
+    boolean renameTo(File dest)   // 相当于mv
+    boolean setLastModified(long time)    // 设置修改日期
+    boolean setReadOnly()
+
+FileReader,FileWriter类：
+  用法：
+    File file = new File("xxx")
+    file.createNewFile()
+    FileWriter fw = new FileWriter(file) 
+    writer.write("this \n is \n an \n example.")
+    writer.flush()
+    writer.close()
+    FileReader fr = new FileReader(file)
+    char[] a = new char[50]
+    fr.read(a)
+    for (char c ： a){
+      System.out.print(c)
+    }
+    fr.close()
+
+Java Scanner类：
+  java.util.Scanner
+  用途：获取用户输入
+  方法：hasNextXXX() 同步等待用户输入
+  用法：
+    - Scanner scan = new Scanner(System.in)
+      if (scan.hasNext()) {
+        String str1 = scan.next()
+        System.out.println("输入的数据为："+str1)
+      }
+      scan.close()
+      // 如果用户输入abc def 
+      // 输出abc
+    - Scanner scan = new Scanner(System.in)
+      if (scan.hasNextLine()) {
+        String str2 = scan.nextLine()
+        System.out.println("输入的数据为："+str2)
+      }
+      scan.close()
+      // 如果用户输入abc def 
+      // 输出abc def
+    - Scanner scan = new Scanner(System.in)
+      if (scan.hasNextInt()) {
+        int i = scan.nextInt()
+        System.out.println("输入的数据为：" + i)
+      }
+      scan.close()
+      // 如果用户输入abc def 
+      // 输出abc
+    - Scanner scan = new Scanner(System.in)
+      if (scan.hasNextFloat()) {
+        float f = scan.nextFloat()
+        System.out.println("输入的数据为：" + f)
+      }
+      scan.close()
+      // 如果用户输入abc def 
+      // 输出abc
+  示例：
+    while (scan.hasNextDouble()) {
+        double x = scan.nextDouble();
+        m = m + 1;
+        sum = sum + x;
+    }  
+    $ javac ScannerDemo.java
+    $ java ScannerDemo
+    12
+    23
+    15
+    21.4
+    end
+    4个数的和为71.4
+    4个数的平均值是17.85      
+
+
+Java异常处理：
