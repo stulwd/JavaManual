@@ -1,3 +1,253 @@
+变量：
+  实例变量（成员变量）：
+    实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。变量的值可以在声明时指定，也可以在构造方法中指定；
+  类变量（静态变量）：
+    静态变量储存在静态存储区。经常被声明为常量，很少单独使用 static 声明变量。
+访问修饰符：
+  default：同一包内可见。使用范围：类、接口、变量、方法
+  private：再同一类内可见。使用范围：方法、成员变量，不能修饰对外部的类
+  public：对所有类可见。使用范围：类、接口、变量、方法
+  protected：对同一包内的内和子类可见。使用范围：变量，方法。不能修饰外部类
+  。。。。。。
+运算符：
+  instanceof：检查对象是否属于类或接口类型
+    String str = "abc"; if (str instanceof String) 返回true
+循环结构：
+  增强for循环：
+    int[] numbers = [1,2,3,4]; 
+    for (int i : numbers) 
+    { 
+      System.out.print(i); 
+    }
+Number类：
+  Number抽象类：
+    包装子类：Integer、Short、Long、Float、Double、Byte
+    内置类型：int      short  long float  double  byte
+  Boolean包装类：
+    内置类型：boolean
+  Character包装类：
+    内置类型：char
+  当内置数据类型被当作对象来使用时，会把内置类型装箱为包装类
+  当包装类当作内置类型来使用时，会拆箱为内置类型
+    Integer x = 5;        // question：可不可以写成 Integer x = new Integer(5) 答：可以，这才是规范写法，Integer x = 5是装箱写法
+    x = x + 5  // 拆箱
+  xxxValue()方法：
+    byteValue() intValue() shortValue() doubleValue() floatValue()
+      Integer x = 5
+      double y = x.doubleValue()
+  compareTo()方法：返回-1 0 1
+    integer x = 5
+    boolean bigger = x.compareTo(6)
+  equals()方法：
+  valueOf静态方法：（static修饰的方法）
+    Double d = Double.valueOf(5)
+    Integer i = Integer.valueOf("14")
+  toString()静态/非静态方法：
+    int x = 40
+    String str = Integer.toString(x)
+    Integer x = 40
+    String str = x.toString()
+  parseInt()静态方法：
+    int x = Integer.parseInt("30")
+    double y = Double.parseDouble("30")
+
+Math类：
+  Math类的方法都是static类型，所以直接通过类名来调用方法：
+    Math.sin() Math.cos() Math.tan(Math.PI/3) Math.atan() Math.toDegrees()
+  type Math.abs(type)静态方法
+  double Math.ceil()静态方法
+  double Math.floor()静态方法
+  double Math.rint()
+  int Math.round()四舍五入，算法为Math.floor(x+0.5)   注意：Math.round(-1.5) = -1 Math.round(1.5) = 2
+  type Math.mix/max(type v1, type v2)
+  double Math.random() 0.0 <= res < 1.0
+
+Character类：
+  对应的基本内置类型为char，占2字节
+    char ch = 'a'
+    char ch = '\u039A'
+    char[] charArr = {'1', '2', 'a', 'b'}
+  Character包装类：
+    Character ch = new Character('a')    // 装箱写法：Character ch = 'a'
+  转义序列：
+    \t：tab键  
+    \b：后退键  
+    \n：~ 
+    \r：return 
+    \f：换页符
+    \"：双引号
+    \\：反斜杠
+  boolean isLetter()/isDigit()/isWhitespace(" "或"\t"或"\n")/isUpperCase()/isLowerCase()
+  char toUpperCase(char c)/toLowerCase(char c)
+  String toString(char c)
+
+String类：
+  引用类型，一旦创建，不可改变值，如果想要对字符串做修改，那么应该用StringBuffer StringBuilder类
+  公共池创建：（类似于C/C++的全局存储区）
+    String str1 = "abc"    // 有别于包装类的装箱，这种写法是在公共池中创建String对象
+    String str2 = "abc"    
+    str1和str2指向同一内存 
+  堆上创建：
+    String str1 = new String("abc")    // 在堆上创建
+    String str2 = new String("abc")
+    str1和str2指向不同内存
+  方法：
+    str.length()方法获取字符串长度
+    str1.concat(str2)连接字符串，返回一个新的字符串
+    str1 + str2连接字符串
+    创建格式化字符串：
+      String fs;
+      fs = String.format("浮点型变量值为：%f" + "整型变量值为：%d" + "字符串变量值为：%s")
+    char charAt(int index)
+    int compareTo(String anotherString)
+    boolean contentEquals(StringBuffer sb)
+    public static String copyValueOf(char[] data)
+    public static String copyValueOf(char[] data, int offset, int count)
+    boolean endsWith(String suffix)
+    boolean startsWith(String prefix)
+    boolean equals(Object anObject)
+    byte[] getBytes() 使用平台的默认字符集将字符串编码为 byte 序列
+    public byte[] getBytes(String charsetName)  使用指定的字符集将字符串编码为 byte 序列 例如：UTF-8、ISO-8859-1
+    public int hashCode() 返回哈希码 str.hashCode() 哈希码算法： s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+    public int indexOf(int ch, int fromIndex)
+    int indexOf(String str, int fromIndex)
+    int lastIndexOf(int ch)
+    int lastIndexOf(String str, int fromIndex)
+    public boolean matches(String regex)
+    public String replace(char searchChar, char newChar)    
+    public String replaceAll(String regex, String replacement)
+    public String replaceFirst(String regex, String replacement)
+    public String[] split(String regex, int limit)   limit是分割的份数
+    public String substring(int beginIndex)
+    public String substring(int beginIndex, int endIndex)
+    public char[] toCharArray()
+    String toLowerCase()
+    String toUpperCase()
+    String trim()
+    static String valueOf(primitive data type x)
+      double d = 45.9
+      String str = String.valueOf(d)
+    public boolean contains(char ch)
+    public boolean contains(String str)
+    public boolean isEmpty()
+
+StringBuffer和StringBuilder：
+  作用：
+    能够被多次修改，不产生新的未使用的对象，防止垃圾产生
+    StringBuilder 类在 Java 5 中被提出，它和 StringBuffer 之间的最大不同在于 StringBuilder 的方法不是线程安全的。
+    但由于 StringBuilder 相较于 StringBuffer 有速度优势，所以多数情况下建议使用 StringBuilder 类。
+  stringBuilder用法：线程不安全
+    StringBuilder sb = new StringBuilder(10)    // 开辟10个char大小的内存放串
+    sb.append("hello, ")
+    System.out.print(sb)
+    sb.append("world !")
+    System.out.print(sb)
+    sb.insert(5, "java")
+    System.out.print(sb)
+    sb.delete(5, 4)
+    System.out.print(sb)
+  stringBuffer用法：线程安全（不能同步访问）
+    public StringBuffer append(String s)
+    public StringBuffer reverse()
+    public delete(int start, int end)
+    public insert(int offset, int i)
+    replace(int start, int end, String str)
+    int capacity()
+    char charAt(int index)
+    void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)
+    int indexOf(String str)
+    int indexOf(String str, int fromIndex)
+    int lastIndexOf(String str)
+    int lastIndexOf(String str, int fromIndex)
+    int length()
+    void setCharAt(int index, char ch)
+    void setLength(int newLength)
+    CharSequence subSequence(int start, int end)
+    String substring(int start)
+    String substring(int start, int end)
+    String toString()
+
+数组：
+  声明：dataType[] arrayRefVar;
+  创建：arrayRefVar = new dataType[arraySize]
+  声明创建一条语句：dataType[] arrayRefVar = new dataType[arraySize]
+  也可以这样创建：dataType[] arrayRefVar = {item1, item2, item3...}
+  遍历数组：
+    for (type item：array) {}
+  数组作为函数的参数：
+    type fun(type[] array)
+  数组作为函数的返回值：
+    type[] fun()
+  Arrays类：java.util.Arrays
+    方法：
+      public static int binarySearch(Object[] a, Object key)
+      public static boolean equals(long[] a, long[] a2)
+      public static void fill(int[] a, int val)
+      public static void sort(Object[] a)
+
+Data对象：
+  用法：
+    Date dNow = new Date( );    // 使用当前时间创建Data对象
+    System.out.println(date.toString());    // 输出Mon May 04 09:51:52 CDT 2013
+  方法：
+    boolean after(Date date)
+    boolean before(Date date)
+    boolean equals(Object date)
+    long getTime( )   // 返回自1970年以来此Data对象表示表示的毫秒数
+    int hashCode( )   // 返回此对象的hash码值
+    void setTime(long time)   // 用毫秒数设置时间
+    String toString( )  // 返回dow mon dd hh:mm:ss zzz yyyy
+  SimpleDateFormat类：
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:")
+    Date dnow = new Date()
+    String str = sf.format(dnow)   // 返回 2021-01-31 14：05：50
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd")
+    Date t = sf.parse("1990-01-01")
+  测量时间：
+    long start = System.currentTimeMillis();
+  Calender对象：
+    作用：设置和获取日期数据的特定部分呢，比如说小时，日，或者分钟
+    Calender c = Calender.getInstance() // 获取当前日期
+    c.set(2009, 6 - 1, 12); // 设定未特定日期 月份一般减1，因为1月是0
+    c.set(Calender.YEAR, 2020)  // 将年份设置为2020
+    c.add(Calender.MONTH, 6)   // 加上6个月
+    c.get(Calender.DATE)  // 返回日期
+    c.get(Calendar.MINUTE); // 返回24小时的小时
+    c.get(Calendar.SECOND); // 返回24小时的小时
+    c.get(Calendar.DAY_OF_WEEK); // 返回24小时的小时
+    c.get(Calendar.HOUR_OF_DAY); // 返回24小时的小时
+
+正则表达式：
+  符号意义：
+    \s+ 若干空格
+    ^ 行开头
+    \d+ 若干数字
+    \. 匹配.
+    (xxx)? 括号里的可有可无
+  java.util.regex类：
+    Pattern类
+      boolean isMatched = Pattern.matches(".*runoob.*", "I am a runoob")
+    Matcher类
+  捕获组：
+    说明：
+      ((A)(B(C)))
+      第0组：((A)(B(C)))
+      第1组：((A)(B(C)))
+      第2组：(A)
+      第3组：(B(C))
+      第4组：(C)
+    举例：
+      String line = "fds dsa aa bb df2300 fdsa"
+      String pattern = "(\\D*)(\\d+)(.*)"
+      Pattern r = Pattern.compile(pattern)
+      Matcher m = r.matcher(line)
+      m.group(0)    // 返回fds dsa aa bb df2300 fdsa
+      m.group(1)    // 返回fds dsa aa bb df
+      m.group(2)    // 返回2300
+      m.group(3)    // 返回 fdsa
+      m.groupCount() // 返回当前matcher对象有多少个捕获组
+
+
 IO流：
   字符流(char)：
     Reader：
