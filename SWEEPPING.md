@@ -1110,3 +1110,89 @@ Exception
       </root>
     </configuration>
     ```
+
+## 反射机制
+- Class是什么
+  - class是由JVM在执行过程中动态加载的，JVM在第一次读取到一种class类型时，将其加载进内存，每加载一种class，JVM就为其创建一个`Class`类型的实例并与class关联起来
+    ```java
+    public final class Class {
+      // 构造方法是private，我们不能创建Class实例，只能由JVM创建
+      private Class() {}
+    }
+    Class cls = new Class(String)
+    ```
+  - 一个`Class`实例包含了该class的所有完整信息
+
+    | Class instance |
+    | --- |
+    | name = java.lang.String |
+    | package = java.lang |
+    | super = java.lang.Object |
+    | interface = CharSequence |
+    | field = value[], hash, ... |
+    | method = indexOf, ... |
+- 通过Class实例来获取class信息的方法称为`反射`
+- 如何获取Class
+  - 方法一：Class cls = String.class
+  - 方法二：Class cls = s.getClass()
+  - 方法三：Class cls = Class.forName("java.lang.String")
+- Class能干什么
+  - 获取class信息
+    ```java
+    public class Main {
+      public static void main(String[] args) {
+          printClassInfo("".getClass());
+          // Class name: java.lang.String 
+          // Simple name: String 
+          // Package name: java.lang
+          // is interface: false
+          // is enum: false
+          // is array: false
+          // is primitive: false
+          printClassInfo(Runnable.class);
+          // is interface: true
+          printClassInfo(java.time.Month.class);
+          // is enum: true
+          printClassInfo(String[].class);
+          // Class name: [Ljava.lang.String
+          // Simple name: String[]
+          // is array: true
+          printClassInfo(int.class);      // jvm也为基本类型（非类类型）创建了Class实例
+          // Class name: int
+          // Simple name: int
+          // is primitive: true
+      }
+      static void printClassInfo(Class cls) {
+          System.out.println("Class name: " + cls.getName());   
+          System.out.println("Simple name: " + cls.getSimpleName());  
+          if (cls.getPackage() != null) {
+              System.out.println("Package name: " + cls.getPackage().getName());
+          }
+          System.out.println("is interface: " + cls.isInterface());
+          System.out.println("is enum: " + cls.isEnum());
+          System.out.println("is array: " + cls.isArray());
+          System.out.println("is primitive: " + cls.isPrimitive());
+      }
+    }
+    ``` 
+  - 创建class实例
+    ```java
+    Class cls = String.class;
+    String s = cls.newInstance()  // 相当于new String()
+    ``` 
+    **newInstance()方法只支持无参构造**
+- JAVA动态加载
+  ```java
+  // Main.java
+  public class Main {
+      public static void main(String[] args) {
+          if (args.length > 0) {
+              create(args[0]);
+          }
+      }
+      static void create(String name) {
+          Person p = new Person(name);
+      }
+  }
+  ```
+  当运行Main.class时，jvm会先加载Main.class，并不会加载Person.class，当运行到create()方法时，才会加载
